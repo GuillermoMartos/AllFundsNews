@@ -1,0 +1,36 @@
+{
+  "name": "all_funds_backend",
+  "version": "1.0.0",
+  "description": "news articles backend for all funds excercise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write . && eslint . --ext .js,.mjs,.ts --fix",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [
+    "mongo",
+    "express",
+    "api",
+    "REST",
+    "hexagonal",
+    "layers"
+  ],
+  "author": "Guillermo L. Martos",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^8.15.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
