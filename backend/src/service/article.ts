@@ -7,8 +7,6 @@ export const getHundredFreshNewsService = async (userId: string) => {
     if (!userId) {
       throw new CustomError(MESSAGGES.missingUserIdRequestParamsError, 422);
     }
-    //trae hasta 100 noticias no archivadas por el usuario
-    // to-do crear cache y crear el servicio de traer las 100 noticias por usuario con estrategia segun caché
     const firstHundredFreshNews = [1, 2, 3];
 
     return firstHundredFreshNews;

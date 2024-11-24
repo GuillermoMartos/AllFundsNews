@@ -1,3 +1,4 @@
+import { MESSAGGES } from '../helpers/constants';
 import { CustomError } from '../helpers/helpers';
 import { Request, Response, NextFunction } from 'express';
 
@@ -14,7 +15,7 @@ export const errorHandlerMiddleware = (
   } else {
     console.error(`[ERROR INESPERADO]: ${err}`);
     res.status(500).json({
-      message: 'Internal Server Error',
+      message: MESSAGGES.unexpectedError,
     });
   }
 };
