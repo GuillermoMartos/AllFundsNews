@@ -3,6 +3,8 @@
   "extends": ["prettier"],
   "plugins": ["prettier"],
   "rules": {
+    "no-unused-vars": "warn",
+    "no-empty-function": "warn",
     "prettier/prettier": [
       "error", 
     {"singleQuote": true}

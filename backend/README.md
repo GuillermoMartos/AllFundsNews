@@ -5,16 +5,18 @@ Hexagonal Layer Project:
 
 - Controller layer: Control HTTP request/responses
 
-- Service layer: Bussiness logic (owns "rechargable" thriggers and filter new by archiveDate/userID value).
+- Service layer: Bussiness logic (hydrate frontend and compare algorithm, main task).
 
-- Data Access layer: communicate with DB for transactions (read/write).
+- Repository layer: communicate with DB for transactions (read/write).
 
 - Models layer: Define objects structure and data:
-  [ARTICLE] title, description, date, content, author, archiveDate:{archiveDate, userID}. - TTL with expirationDate?
-  [USER] email, password
+  [ARTICLE] title, description, date, content, author, archiveDate:[{userID, archivedStatus}]. - Deleted when no user has archived it.
+  [USER] email, password, archivedIdNews, deletedIdNews
 
 - Routes layer: define routes and associate them to controllers
-  [GET/new] response with pagination by 20 unarchived news
-  [GET/archive] response with pagination by 20 archived news
-  [PUT/new] set archiveDate to exiting NEW
-  [DELETE/archive] delete NEW (or set TTL?)
+  [GET - new/:userId] TOKEN PROTECTED ROUTE response with pagination by 20 unarchived and not previously deleted news.
+  [GET - archive:userId] TOKEN PROTECTED ROUTE response with pagination by 20 user archived news.
+  [POST - new/:newId] TOKEN PROTECTED ROUTE create NEW and/or set archiveDate to NEW.
+  [POST - archive/:newId] TOKEN PROTECTED ROUTE set IdNew to deletedUserNewsIds and delete the NEW if it's the only user who archived it.
+  [POST - user/create] create new user with password and email.
+  [POST - user/login] login user with credentials, if success, return JWT.
