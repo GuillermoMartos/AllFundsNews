@@ -14,6 +14,7 @@ export const MESSAGGES = {
   userEmailAlreadyExists: 'Email already in use for registered user',
   wrongUserCredentials: 'Wrong password or email submited',
   unexistingUserEmail: 'No user found with email ',
+  userDoesNotMatchToken: 'User does not match token, retry login',
 };
 
 export const categoriesNews = {

@@ -12,7 +12,7 @@ export const createNewUserController = async (
     const { email, password } = req.body;
     const userCreated = await createNewUserService(email, password);
 
-    const token = jwt.sign(userCreated, JWT_SECRET);
+    const token = jwt.sign(userCreated.id, JWT_SECRET);
     res.setHeader('Authorization', token);
 
     return res.status(200).json(userCreated);
@@ -30,7 +30,7 @@ export const loginUserController = async (
     const { email, password } = req.body;
     const userCreated = await loginUserService(email, password);
 
-    const token = jwt.sign(userCreated, JWT_SECRET);
+    const token = jwt.sign(userCreated.id, JWT_SECRET);
     res.setHeader('Authorization', token);
 
     return res.status(200).json(userCreated);

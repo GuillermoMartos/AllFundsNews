@@ -1,15 +1,35 @@
-import { MESSAGGES } from '../helpers/constants';
-import { CustomError } from '../helpers/helpers';
+import { fetchFiftyNewsByUserStrategy } from '../helpers/helpers';
+import {
+  filterFiftyArticlesByUserPreferences,
+  getArchivedNews,
+  getUserCachedOrDBHistory,
+} from '../helpers/queryRobot';
 
-export const getHundredFreshNewsService = async (userId: string) => {
+export const getFiftyFreshNewsService = async (userId: string) => {
   try {
-    //servicio se encarga de la lógica: traer 100 noticias filtradas de BD por usuario sin archivar. Si no alcanzan, pedir almacenar nuevas.
-    if (!userId) {
-      throw new CustomError(MESSAGGES.missingUserIdRequestParamsError, 422);
-    }
-    const firstHundredFreshNews = [1, 2, 3];
+    //servicio se encarga de la lógica: traer 50 noticias filtradas por usuario. Si no alcanzan, pedir nuevas con otra estrategia.
+    const userData = await getUserCachedOrDBHistory(userId);
+    const fiftyNews = await fetchFiftyNewsByUserStrategy(
+      userData.searchStrategy.pop() as string,
+    );
 
-    return firstHundredFreshNews;
+    const filteredFiftyNews = filterFiftyArticlesByUserPreferences(
+      fiftyNews,
+      userData.id,
+    );
+
+    return filteredFiftyNews;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getUserArchivedNewsService = async (userId: string) => {
+  try {
+    const userData = await getUserCachedOrDBHistory(userId);
+    const userArchivedNews = getArchivedNews(userData);
+
+    return userArchivedNews;
   } catch (error) {
     throw error;
   }

@@ -45,4 +45,4 @@ articleSchema.index({
   'archiveDate.userId': 1,
 });
 
-export const Article = mongoose.model('User', articleSchema);
+export const Article = mongoose.model('Article', articleSchema);

@@ -21,5 +21,20 @@ export interface ModelNew {
   author: string;
   content: string;
   description: string;
-  _id?: string;
+  _id: string;
+}
+
+export interface RangesOfInterest {
+  highestDateOfNew: Date | null;
+  lowestDateOfNew: Date | null;
+}
+
+export interface UserData {
+  id: string;
+  archivedNewsIds: string[];
+  deletedNewsIds: string[];
+  userRangeOfInterestDate?: RangesOfInterest;
+  searchStrategy: string[];
+  email: string;
+  password: string;
 }

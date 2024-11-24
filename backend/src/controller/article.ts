@@ -1,15 +1,33 @@
 import { Response, Request, NextFunction } from 'express';
-import { getHundredFreshNewsService } from '../service/article';
+import {
+  getFiftyFreshNewsService,
+  getUserArchivedNewsService,
+} from '../service/article';
 
-export const getHundredFreshNewsController = async (
+export const getFiftyFreshNewsController = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { userId } = req.params;
-    const HundredFreshNews = await getHundredFreshNewsService(userId as string);
+    const HundredFreshNews = await getFiftyFreshNewsService(userId);
     return res.status(200).json(HundredFreshNews);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserArchivedNewsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { userId } = req.params;
+    const userArchivedNews = getUserArchivedNewsService(userId);
+
+    return res.status(200).json(userArchivedNews);
   } catch (error) {
     next(error);
   }
