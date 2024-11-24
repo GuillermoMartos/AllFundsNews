@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-export const articleSchema = new Schema({
+const articleSchema = new Schema({
   id: {
     type: String,
     required: true,

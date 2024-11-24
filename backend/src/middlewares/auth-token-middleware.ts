@@ -17,7 +17,7 @@ export const tokenValidationMiddleware = (
     const tokenPayload = jwt.verify(token, JWT_SECRET);
     req.body.tokenPayload = tokenPayload;
   } catch (err) {
-    console.error(err);
+    console.error('[ERROR EN VALIDACIÓN TOKEN]', err);
     throw new CustomError('Not authorized', 401);
   }
 

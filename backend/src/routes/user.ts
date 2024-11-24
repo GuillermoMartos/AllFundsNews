@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { createNewUserController } from '../controller/user';
+import {
+  createNewUserController,
+  loginUserController,
+} from '../controller/user';
 
 const router = Router();
 
@@ -18,7 +21,7 @@ router.post(
   '/login',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      //to do
+      loginUserController(req, res, next);
     } catch (err) {
       return next(err);
     }

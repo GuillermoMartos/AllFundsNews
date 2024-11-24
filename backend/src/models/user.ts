@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { userCategoriesNews } from '../helpers/constants';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
@@ -30,6 +31,10 @@ const userSchema = new Schema({
       type: Date,
       default: null,
     },
+  },
+  searchStrategy: {
+    type: Array,
+    default: userCategoriesNews,
   },
 });
 
