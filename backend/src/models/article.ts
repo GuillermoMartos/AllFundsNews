@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 export const articleSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -36,7 +40,9 @@ export const articleSchema = new Schema({
   ],
 });
 
-// indexamos el array archiveDate por la propiedad userId para luego tener mejor perfomance en el filtrado de noticias por este id de usuario
+// este índice nos ayuda a identificar el id del usuario que borre la noticia si la misma ya tiene muchos usuarios appendados a ella
 articleSchema.index({
   'archiveDate.userId': 1,
 });
+
+export const Article = mongoose.model('User', articleSchema);
