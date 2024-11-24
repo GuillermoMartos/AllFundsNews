@@ -23,6 +23,7 @@ export function normalizeAPINew(APIArticle: APINew): ModelNew {
     date: new Date(APIArticle.published),
     title: APIArticle.title,
     content: APIArticle.description,
+    photo: APIArticle.image,
   };
 
   return normalizedNew;

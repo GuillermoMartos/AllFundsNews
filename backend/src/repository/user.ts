@@ -48,7 +48,7 @@ export const loginUserRepository = async (
 
 export const getUserHistoryRepository = async (
   userId: string,
-): Promise<UserData> => {
+): Promise<any> => {
   const user = await User.findOne({
     _id: userId,
   });
@@ -61,5 +61,5 @@ export const getUserHistoryRepository = async (
   user.searchStrategy = pickNewStrategyAndReturnArray(user.searchStrategy);
   await user.save();
 
-  return user as UserData;
+  return user;
 };

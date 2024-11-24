@@ -5,6 +5,7 @@ const articleSchema = new Schema({
   id: {
     type: String,
     required: true,
+    unique: true,
   },
   title: {
     type: String,
@@ -25,6 +26,9 @@ const articleSchema = new Schema({
   date: {
     type: Date,
     required: true,
+  },
+  photo: {
+    type: String,
   },
   archiveDate: [
     {

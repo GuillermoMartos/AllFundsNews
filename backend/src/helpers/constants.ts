@@ -10,6 +10,8 @@ export const MESSAGGES = {
   unexpectedError: 'Unexpected error, please retry',
   missingUserCreateRequestParamsError:
     'Some request body params missing: needed "email" and "password"',
+  missingNewArchiveCreateRequestParamsError:
+    'Some request body params missing: needed "userId" and "fetchedArticle"',
   missingUserIdRequestParamsError: 'No userId found in query params',
   userEmailAlreadyExists: 'Email already in use for registered user',
   wrongUserCredentials: 'Wrong password or email submited',

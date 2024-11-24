@@ -12,9 +12,7 @@ import {
 } from './helpers';
 import { APINew, RangesOfInterest, UserData } from './types';
 
-export async function getUserCachedOrDBHistory(
-  userId: string,
-): Promise<UserData> {
+export async function getUserCachedOrDBHistory(userId: string): Promise<any> {
   if (!userId) {
     throw new CustomError(MESSAGGES.missingUserIdRequestParamsError, 422);
   }
@@ -48,7 +46,7 @@ export async function getArchivedNews(userData: UserData) {
     return cachedArticlesCollected;
   } else {
     const DBCollectedNews = await getArchivedNewsRepository(newsToCollect);
-    return DBCollectedNews.concat(cachedArticlesCollected);
+    return [...cachedArticlesCollected, ...DBCollectedNews];
   }
 }
 

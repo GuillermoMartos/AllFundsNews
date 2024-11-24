@@ -22,6 +22,7 @@ export interface ModelNew {
   content: string;
   description: string;
   _id: string;
+  photo: string;
 }
 
 export interface RangesOfInterest {

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import {
   getFiftyFreshNewsController,
   getUserArchivedNewsController,
+  saveNewInUserArchiveController,
 } from '../controller/article';
 import { tokenValidationMiddleware } from '../middlewares';
 
@@ -31,17 +32,16 @@ router.get(
   },
 );
 
-/* to do 
 router.post(
-  '/archive',
+  '/new/:userId',
   tokenValidationMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return next(new CustomError('mi error especial', 500));
+      saveNewInUserArchiveController(req, res, next);
     } catch (err) {
       return next(err);
     }
   },
-); */
+);
 
 export default router;
