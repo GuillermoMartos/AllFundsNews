@@ -10,10 +10,15 @@ export const MESSAGGES = {
   unexpectedError: 'Unexpected error, please retry',
   missingUserCreateRequestParamsError:
     'Some request body params missing: needed "email" and "password"',
+  missingNewArchiveCreateRequestParamsError:
+    'Some request body params missing: needed "userId" and "fetchedArticle"',
+  missingArticleDeletionRequestParamsError:
+    'Some request body params missing: needed "userId" and "articleId"',
   missingUserIdRequestParamsError: 'No userId found in query params',
   userEmailAlreadyExists: 'Email already in use for registered user',
   wrongUserCredentials: 'Wrong password or email submited',
   unexistingUserEmail: 'No user found with email ',
+  userDoesNotMatchToken: 'User does not match token, retry login',
 };
 
 export const categoriesNews = {

@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { CustomError } from '../helpers/helpers';
-import { getHundredFreshNewsController } from '../controller/article';
+import {
+  deleteArchivedArticleFromUserAndCheckArticleDestructionController,
+  getFiftyFreshNewsController,
+  getUserArchivedNewsController,
+  saveNewInUserArchiveController,
+} from '../controller/article';
 import { tokenValidationMiddleware } from '../middlewares';
 
 const router = Router();
@@ -10,7 +14,7 @@ router.get(
   tokenValidationMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      getHundredFreshNewsController(req, res, next);
+      getFiftyFreshNewsController(req, res, next);
     } catch (err) {
       return next(err);
     }
@@ -18,11 +22,11 @@ router.get(
 );
 
 router.get(
-  '/archive:userId',
+  '/archive/:userId',
   tokenValidationMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return next(new CustomError('mi error especial', 500));
+      getUserArchivedNewsController(req, res, next);
     } catch (err) {
       return next(err);
     }
@@ -30,11 +34,27 @@ router.get(
 );
 
 router.post(
-  '/archive',
+  '/new/:userId',
   tokenValidationMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return next(new CustomError('mi error especial', 500));
+      saveNewInUserArchiveController(req, res, next);
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+router.post(
+  '/article/:userId',
+  tokenValidationMiddleware,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      deleteArchivedArticleFromUserAndCheckArticleDestructionController(
+        req,
+        res,
+        next,
+      );
     } catch (err) {
       return next(err);
     }

@@ -1,5 +1,5 @@
 import { SHA3 } from 'crypto-js';
-import { APINew, ModelNew } from './types';
+import { APINew, ModelNew, RangesOfInterest } from './types';
 import {
   API_NEWS_TOKEN,
   categoriesNews,
@@ -23,6 +23,7 @@ export function normalizeAPINew(APIArticle: APINew): ModelNew {
     date: new Date(APIArticle.published),
     title: APIArticle.title,
     content: APIArticle.description,
+    photo: APIArticle.image,
   };
 
   return normalizedNew;
@@ -73,16 +74,18 @@ function matchStrategyWithURL(strategy: string): string {
   }
 }
 
-export const getFirstHundredNewsByUserStrategy = async (strategy: string) => {
+export const fetchFiftyNewsByUserStrategy = async (
+  strategy: string,
+): Promise<APINew[]> => {
   try {
     const strategyURL = matchStrategyWithURL(strategy);
-    const hundredNewsByUserStrategy = await fetch(strategyURL, {
+    const fiftyNewsByUserStrategy = await fetch(strategyURL, {
       headers: {
         Authorization: API_NEWS_TOKEN,
       },
     }).then((res) => res.json());
 
-    return hundredNewsByUserStrategy;
+    return fiftyNewsByUserStrategy.news as APINew[];
   } catch (error) {
     throw error;
   }
@@ -102,3 +105,21 @@ export const encrypt = (data: any) => {
   }).toString();
   return crypted;
 };
+
+export function isDateBetweenRange(
+  dateToCheck: Date,
+  datesRanges: RangesOfInterest,
+) {
+  if (
+    datesRanges.lowestDateOfNew &&
+    dateToCheck > datesRanges.lowestDateOfNew
+  ) {
+    if (
+      datesRanges.highestDateOfNew &&
+      dateToCheck < datesRanges.highestDateOfNew
+    ) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -2,13 +2,14 @@ import { MESSAGGES } from '../helpers/constants';
 import {
   CustomError,
   encrypt,
-  getFirstHundredNewsByUserStrategy,
+  fetchFiftyNewsByUserStrategy,
 } from '../helpers/helpers';
 import {
   createNewUserRepository,
   loginUserRepository,
 } from '../repository/user';
 import { userCreateOrLoginResponse } from '../DAO/user';
+import { addUserToCache } from '../helpers/cache';
 
 export const createNewUserService = async (
   email: string,
@@ -26,9 +27,11 @@ export const createNewUserService = async (
     /* aquí podríamos usar una API Gateway para usar nuestra ruta de usuario y la ruta de obtener noticias
     para el usuario. De momento, las mantengo en una sola llamada, aunque no sea lo óptimo en términos de
     autonomía y concepto de las capas que definimos para el proyecto */
-    const oneHundredFreshNews = await getFirstHundredNewsByUserStrategy(
-      newUser.searchStrategy.pop(),
+    const oneHundredFreshNews = await fetchFiftyNewsByUserStrategy(
+      newUser.searchStrategy.pop() as string,
     );
+
+    addUserToCache(newUser.id, newUser);
 
     return {
       id: newUser.id,
@@ -51,19 +54,21 @@ export const loginUserService = async (
     }
     const cryptedMail = encrypt(email);
     const cryptedPassword = encrypt(password);
-    const newUser = await loginUserRepository(cryptedMail, cryptedPassword);
+    const user = await loginUserRepository(cryptedMail, cryptedPassword);
 
     /* aquí podríamos usar una API Gateway para usar nuestra ruta de usuario y la ruta de obtener noticias
     para el usuario. De momento, las mantengo en una sola llamada, aunque no sea lo óptimo en términos de
     autonomía y concepto de las capas que definimos para el proyecto */
-    const oneHundredFreshNews = await getFirstHundredNewsByUserStrategy(
-      newUser.searchStrategy.pop(),
+    const oneHundredFreshNews = await fetchFiftyNewsByUserStrategy(
+      user.searchStrategy.pop() as string,
     );
 
+    addUserToCache(user.id, user);
+
     return {
-      id: newUser.id,
-      archivedNewsIds: newUser.archivedNewsIds,
-      deletedNewsIds: newUser.deletedNewsIds,
+      id: user.id,
+      archivedNewsIds: user.archivedNewsIds,
+      deletedNewsIds: user.deletedNewsIds,
       freshNews: oneHundredFreshNews,
     };
   } catch (error) {

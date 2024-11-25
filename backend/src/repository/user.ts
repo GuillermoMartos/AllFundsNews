@@ -1,17 +1,18 @@
 import { MESSAGGES } from '../helpers/constants';
 import { CustomError, pickNewStrategyAndReturnArray } from '../helpers/helpers';
+import { UserData } from '../helpers/types';
 import { User } from '../models/user';
 
 export const createNewUserRepository = async (
   email: string,
   password: string,
-) => {
+): Promise<UserData> => {
   try {
     const newUser = await User.create({
       email,
       password,
     });
-    return newUser;
+    return newUser as UserData;
   } catch (error: any) {
     // error de repeticion de campo único en Mongo para user: email existente
     if (error.code === 11000) {
@@ -21,7 +22,10 @@ export const createNewUserRepository = async (
   }
 };
 
-export const loginUserRepository = async (email: string, password: string) => {
+export const loginUserRepository = async (
+  email: string,
+  password: string,
+): Promise<UserData> => {
   try {
     const user = await User.findOne({
       email,
@@ -36,8 +40,26 @@ export const loginUserRepository = async (email: string, password: string) => {
     user.searchStrategy = pickNewStrategyAndReturnArray(user.searchStrategy);
     await user.save();
 
-    return user;
+    return user as UserData;
   } catch (error: any) {
     throw error;
   }
+};
+
+export const getUserHistoryRepository = async (
+  userId: string,
+): Promise<any> => {
+  const user = await User.findOne({
+    _id: userId,
+  });
+
+  if (!user) {
+    console.error('[ERROR FINDING EXPECTED USER]: userId ', userId);
+    throw new CustomError(MESSAGGES.unexpectedError, 500);
+  }
+
+  user.searchStrategy = pickNewStrategyAndReturnArray(user.searchStrategy);
+  await user.save();
+
+  return user;
 };
