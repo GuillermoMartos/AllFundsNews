@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import {
+  deleteArticleForUserAndCheckDestructionService,
   getFiftyFreshNewsService,
   getUserArchivedNewsService,
   saveNewInUserArchiveService,
@@ -52,3 +53,17 @@ export const saveNewInUserArchiveController = async (
     next(error);
   }
 };
+
+export const deleteArchivedArticleFromUserAndCheckArticleDestructionController =
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.params;
+      const { articleId } = req.body;
+      const userDeletedArchivedArticle =
+        await deleteArticleForUserAndCheckDestructionService(userId, articleId);
+
+      return res.status(200).json(userDeletedArchivedArticle);
+    } catch (error) {
+      next(error);
+    }
+  };

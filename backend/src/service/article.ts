@@ -11,7 +11,10 @@ import {
   getUserCachedOrDBHistory,
 } from '../helpers/queryRobot';
 import { APINew, ModelNew } from '../helpers/types';
-import { saveNewArticleOrSetAsUserPrefered } from '../repository';
+import {
+  deleteArchivedIdFromUserAndAddToDeletedIdRepository,
+  saveNewArticleOrSetAsUserPrefered,
+} from '../repository';
 
 export const getFiftyFreshNewsService = async (userId: string) => {
   try {
@@ -62,6 +65,27 @@ export const saveNewInUserArchiveService = async (
     );
     addNewToCache(savedArticle.id, savedArticle as unknown as ModelNew);
     return savedArticle;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteArticleForUserAndCheckDestructionService = async (
+  userId: string,
+  articleId: string,
+) => {
+  try {
+    if (!userId || !articleId) {
+      throw new CustomError(
+        MESSAGGES.missingArticleDeletionRequestParamsError,
+        422,
+      );
+    }
+    await deleteArchivedIdFromUserAndAddToDeletedIdRepository(
+      userId,
+      articleId,
+    );
+    //con que logica va sobre el cahche?
   } catch (error) {
     throw error;
   }

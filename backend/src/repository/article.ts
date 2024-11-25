@@ -73,3 +73,63 @@ export async function saveNewArticleOrSetAsUserPrefered(
     throw new CustomError(MESSAGGES.unexpectedError, 500);
   }
 }
+
+export async function deleteArchivedIdFromUserAndAddToDeletedIdRepository(
+  userId: string,
+  articleId: string,
+) {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: {
+          archivedNewsIds: articleId,
+        },
+        $addToSet: {
+          deletedNewsIds: articleId,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!updatedUser) {
+      console.error(
+        '[ERROR INESPERADO]: No se encontró usuario o noticia dentro de los archivados del usuario',
+      );
+      throw new CustomError(MESSAGGES.unexpectedError, 404);
+    }
+
+    const articleFound = await Article.findOne({
+      id: articleId,
+    }).select('archiveDate');
+
+    if (articleFound?.archiveDate.length === 1) {
+      // el artículo sólo tenía un usuario appendeado, así que lo podemos borrar
+      await Article.deleteOne({
+        id: articleId,
+      });
+    } else {
+      // el artículo sólo tiene más usuarios suscriptos, así que solo quitamos a nuestro usuario
+      await Article.updateOne(
+        {
+          id: articleId,
+        },
+        {
+          $pull: {
+            archiveDate: {
+              userId,
+            },
+          },
+        },
+      );
+    }
+  } catch (error) {
+    console.error(
+      '[ERROR INESPERADO] En proceso de quitar artículo archivado y pasar a borrado',
+      error,
+    );
+    throw new CustomError(MESSAGGES.unexpectedError, 500);
+  }
+}

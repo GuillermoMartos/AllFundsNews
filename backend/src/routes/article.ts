@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import {
+  deleteArchivedArticleFromUserAndCheckArticleDestructionController,
   getFiftyFreshNewsController,
   getUserArchivedNewsController,
   saveNewInUserArchiveController,
@@ -38,6 +39,22 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       saveNewInUserArchiveController(req, res, next);
+    } catch (err) {
+      return next(err);
+    }
+  },
+);
+
+router.post(
+  '/article/:userId',
+  tokenValidationMiddleware,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      deleteArchivedArticleFromUserAndCheckArticleDestructionController(
+        req,
+        res,
+        next,
+      );
     } catch (err) {
       return next(err);
     }
