@@ -47,6 +47,15 @@ export async function saveNewArticleOrSetAsUserPrefered(
       },
     );
 
+    if (!archivedNew) {
+      console.error(
+        '[ERROR INESPERADO] En Artículo, al guardar en usuario',
+        normalizedArticle,
+        userId,
+      );
+      throw new CustomError(MESSAGGES.unexpectedError, 500);
+    }
+
     const userUpdated = await User.findByIdAndUpdate(
       userId,
       {
@@ -60,8 +69,12 @@ export async function saveNewArticleOrSetAsUserPrefered(
     );
 
     if (!userUpdated) {
-      console.error('Usuario no encontrado');
-      throw new Error('User not found');
+      console.error(
+        '[ERROR INESPERADO] En Usuario, al appendearle artículo guardado',
+        normalizedArticle,
+        userId,
+      );
+      throw new CustomError(MESSAGGES.unexpectedError, 500);
     }
 
     return archivedNew;
