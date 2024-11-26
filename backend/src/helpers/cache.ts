@@ -21,6 +21,11 @@ export function getNewFromCache(newId: string) {
   return entry;
 }
 
+export function deleteNewFromCache(newId: string) {
+  const entry = newsCache.delete(newId);
+  return entry;
+}
+
 function clearCache(cache: Map<any, any>, name: string) {
   console.log(
     `[${name} CACHE CLEARING] Clearing cache at ${new Date().toISOString()}`,

@@ -1,6 +1,10 @@
 import { MESSAGGES } from '../helpers/constants';
 import { CustomError } from '../helpers/helpers';
-import { ModelNew } from '../helpers/types';
+import {
+  ModelNew,
+  UpdatedOrDeletedIndicator,
+  UserData,
+} from '../helpers/types';
 import { Article } from '../models/article';
 import { User } from '../models/user';
 
@@ -62,6 +66,16 @@ export async function saveNewArticleOrSetAsUserPrefered(
         $addToSet: {
           archivedNewsIds: archivedNew.id,
         },
+        $min: {
+          'userRangeOfInterestDate.lowestDateOfNew': new Date(
+            normalizedArticle.date,
+          ),
+        },
+        $max: {
+          'userRangeOfInterestDate.highestDateOfNew': new Date(
+            normalizedArticle.date,
+          ),
+        },
       },
       {
         new: true,
@@ -90,7 +104,7 @@ export async function saveNewArticleOrSetAsUserPrefered(
 export async function deleteArchivedIdFromUserAndAddToDeletedIdRepository(
   userId: string,
   articleId: string,
-) {
+): Promise<[UserData, UpdatedOrDeletedIndicator]> {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -123,6 +137,13 @@ export async function deleteArchivedIdFromUserAndAddToDeletedIdRepository(
       await Article.deleteOne({
         id: articleId,
       });
+      return [
+        updatedUser as UserData,
+        {
+          deleted: true,
+          updated: false,
+        },
+      ];
     } else {
       // el artículo sólo tiene más usuarios suscriptos, así que solo quitamos a nuestro usuario
       await Article.updateOne(
@@ -137,6 +158,13 @@ export async function deleteArchivedIdFromUserAndAddToDeletedIdRepository(
           },
         },
       );
+      return [
+        updatedUser as UserData,
+        {
+          deleted: false,
+          updated: true,
+        },
+      ];
     }
   } catch (error) {
     console.error(

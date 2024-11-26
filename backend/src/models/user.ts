@@ -25,11 +25,11 @@ const userSchema = new Schema({
   userRangeOfInterestDate: {
     highestDateOfNew: {
       type: Date,
-      default: null,
+      default: Date.now(),
     },
     lowestDateOfNew: {
       type: Date,
-      default: null,
+      default: Date.now(),
     },
   },
   searchStrategy: {

@@ -58,12 +58,13 @@ export async function filterFiftyArticlesByUserPreferences(
     _id: userId,
   });
   if (!user) {
-    console.error('[ERROR FINDING EXPECTED USER]: userId ', userId);
+    console.error(': userId ', userId);
     throw new CustomError(MESSAGGES.unexpectedError, 500);
   }
   const outOfUserRangeFreshNews = [];
   const inRangeNewsToFilter: string[] = [];
-
+  let notComparedArticles = 0;
+  let comparedArticles = 0;
   for (const fetchedArticle of articlesFetched) {
     //first rule of algorithm: if article fetched is out of user range of "posible prohibitions", it's ok to show it
     if (
@@ -72,13 +73,19 @@ export async function filterFiftyArticlesByUserPreferences(
         user.userRangeOfInterestDate as RangesOfInterest,
       )
     ) {
+      comparedArticles += 1;
       /* second rule of algorithm, indexed and binary seacrch performed by mongo under mongoose 
       (otherwise, we would make a binary tree to keep ordered ids and perform faster comparition) */
       inRangeNewsToFilter.push(fetchedArticle.id);
     } else {
+      notComparedArticles += 1;
       outOfUserRangeFreshNews.push(fetchedArticle);
     }
   }
+
+  console.log(
+    `[RESULTADO AHORRO COMPARACIÓN]: Noticias comparadas: ${comparedArticles}, Noticias no comparadas: ${notComparedArticles}`,
+  );
 
   if (inRangeNewsToFilter.length > 0) {
     const archivedMatches = user.archivedNewsIds.filter((id: string) =>

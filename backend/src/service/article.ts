@@ -1,4 +1,8 @@
-import { addNewToCache } from '../helpers/cache';
+import {
+  addNewToCache,
+  addUserToCache,
+  deleteNewFromCache,
+} from '../helpers/cache';
 import { MESSAGGES } from '../helpers/constants';
 import {
   CustomError,
@@ -81,11 +85,15 @@ export const deleteArticleForUserAndCheckDestructionService = async (
         422,
       );
     }
-    await deleteArchivedIdFromUserAndAddToDeletedIdRepository(
-      userId,
-      articleId,
-    );
-    //con que logica va sobre el cahche?
+    const [userUpdated, newUpdatedOrDeleted] =
+      await deleteArchivedIdFromUserAndAddToDeletedIdRepository(
+        userId,
+        articleId,
+      );
+    addUserToCache(userUpdated.id, userUpdated);
+    if (newUpdatedOrDeleted.deleted) {
+      deleteNewFromCache(articleId);
+    }
   } catch (error) {
     throw error;
   }

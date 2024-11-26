@@ -10,6 +10,7 @@ import {
 } from '../repository/user';
 import { userCreateOrLoginResponse } from '../DAO/user';
 import { addUserToCache } from '../helpers/cache';
+import { UserData } from '../helpers/types';
 
 export const createNewUserService = async (
   email: string,
@@ -31,7 +32,12 @@ export const createNewUserService = async (
       newUser.searchStrategy.pop() as string,
     );
 
-    addUserToCache(newUser.id, newUser);
+    addUserToCache(newUser.id, {
+      id: newUser.id,
+      searchStrategy: newUser.searchStrategy,
+      archivedNewsIds: newUser.archivedNewsIds,
+      deletedNewsIds: newUser.deletedNewsIds,
+    } as UserData);
 
     return {
       id: newUser.id,
