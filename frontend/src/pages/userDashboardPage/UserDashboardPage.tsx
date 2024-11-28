@@ -1,25 +1,23 @@
  
 import Header from "../../components/header.tsx";
 import styles from "../../css/UserDashboardPage.module.css";
-import moreStyles from "../../css/header.module.css";
 import { useArticles } from "../../hooks/useNotes";
+import { externalAPINew } from "../../types/article.ts";
 
 function UserDashboardPage() {
 
-  const {  
+  const {  articles,
     loading,
     newArticlesLoading,
     fetchNewArticles,
-    archiveArticle, fixed
+    archiveArticle,
    } = useArticles();
 
-  const handleClickArchive = (articleId:string) => {
-    console.log('hola')
-    archiveArticle(articleId)
+  const handleClickArchive = (articleFetched:externalAPINew) => {
+    archiveArticle(articleFetched)
   };
   
   const handleClickFetchNews = () => {
-    console.log('a buscar!')
     fetchNewArticles()
   };
 
@@ -30,10 +28,10 @@ function UserDashboardPage() {
         
       <div className={styles.articleWrapper}>
    
-          {fixed && fixed.map((article) => (
+          {articles && articles.map((article) => (
             <div className={styles.new_wrapper} id={article.id} key={article.id}>
               <div className={styles.new_image_space}>
-              <img loading="lazy" className={styles.news_dashboard_img} src={article.image} alt={article.title.slice(0,15)}/>
+              <img loading="lazy" className={styles.news_dashboard_img} src={article.image} alt={article.title}/>
               </div>
               <section className={styles.info_and_button_section}>
 
@@ -45,7 +43,7 @@ function UserDashboardPage() {
 
               <button
                 className={styles.btn_archivar}
-                onClick={() => {handleClickArchive(article.id)}}
+                onClick={() => {handleClickArchive(article as externalAPINew)}}
                 >
                 Archivar
               </button>
@@ -54,8 +52,8 @@ function UserDashboardPage() {
             </div>
           ))}
 
-  <button className={moreStyles.btn_banner} onClick={()=>{handleClickFetchNews()}} disabled={newArticlesLoading}>Buscar noticias!</button>
-{newArticlesLoading ? "Cargando nuevas noticias..." : "Buscar más noticias!"}
+  <button className={styles.btn_archivar} onClick={()=>{handleClickFetchNews()}} disabled={newArticlesLoading}>Buscar noticias!</button>
+{newArticlesLoading ? "Cargando nuevas noticias..." : null}
       </div>
     </>
   );
