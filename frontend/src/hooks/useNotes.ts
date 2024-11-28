@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { archiveSelectedArticle, fetchFreshNews, deleteArchivedNewFromUser } from "../api/articleApi";
+import {
+  archiveSelectedArticle,
+  fetchFreshNews,
+  deleteArchivedNewFromUser,
+} from "../api/articleApi";
 import { externalAPINew } from "../types/article";
 import { useAuth } from "../context/AuthContext";
-import { LOCAL_STORAGE_USER_ID, LOCAL_STORAGE_USER_TOKEN } from "../constants/client";
+import {
+  LOCAL_STORAGE_USER_ID,
+  LOCAL_STORAGE_USER_TOKEN,
+} from "../constants/client";
 
 export const useArticles = () => {
   const [articles, setArticles] = useState<externalAPINew[]>([]);
@@ -11,8 +18,8 @@ export const useArticles = () => {
   const [newArticlesLoading, setNewArticlesLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-  
-  const {freshNews: initialNews} = location.state || []
+
+  const { freshNews: initialNews } = location.state || [];
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -39,15 +46,15 @@ export const useArticles = () => {
 
   const archiveArticle = async (fetchedArticle: externalAPINew) => {
     try {
-        const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
-        const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
-        if (userId && token) {
-          await archiveSelectedArticle(userId, token, fetchedArticle);
-          document.getElementById(fetchedArticle.id)?.remove()
-        }
-      } catch (error) {
-        console.error("Error arhiving new, retry", error);
+      const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
+      const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
+      if (userId && token) {
+        await archiveSelectedArticle(userId, token, fetchedArticle);
+        document.getElementById(fetchedArticle.id)?.remove();
       }
+    } catch (error) {
+      console.error("Error arhiving new, retry", error);
+    }
   };
 
   const removeArticleFromArchive = async (articleId: string) => {
@@ -56,21 +63,19 @@ export const useArticles = () => {
       const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
       if (userId && token) {
         await deleteArchivedNewFromUser(userId, token, articleId);
-        document.getElementById(articleId)?.remove()
+        document.getElementById(articleId)?.remove();
       }
     } catch (error) {
       console.error("Error deleting new, retry", error);
     }
   };
 
-
-  
   return {
     articles,
     loading,
     newArticlesLoading,
     fetchNewArticles,
     archiveArticle,
-    removeArticleFromArchive
+    removeArticleFromArchive,
   };
 };

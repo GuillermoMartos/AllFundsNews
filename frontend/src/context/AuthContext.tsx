@@ -5,7 +5,10 @@ import React, {
   PropsWithChildren,
   useEffect,
 } from "react";
-import { LOCAL_STORAGE_USER_ID, LOCAL_STORAGE_USER_TOKEN } from "../constants/client";
+import {
+  LOCAL_STORAGE_USER_ID,
+  LOCAL_STORAGE_USER_TOKEN,
+} from "../constants/client";
 
 interface AuthContextProps {
   isAuthenticated: boolean;

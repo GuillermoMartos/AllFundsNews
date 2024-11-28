@@ -8,25 +8,29 @@ import {
 import { userLoginResponseObject } from "../types/user";
 
 export const performUserLogin = async (
-  data: performUserLoguinRequestBody
+  data: performUserLoguinRequestBody,
 ): Promise<userLoginResponseObject> => {
   try {
-    const response = await axios.post(userUrlsMap.USER_LOGIN_URL, {...data}, {headers: {'Content-Type': 'application/json'}});
-    const token = response.headers['authorization']
-    return {...response.data, token}
+    const response = await axios.post(
+      userUrlsMap.USER_LOGIN_URL,
+      { ...data },
+      { headers: { "Content-Type": "application/json" } },
+    );
+    const token = response.headers["authorization"];
+    return { ...response.data, token };
   } catch (error) {
     if (
       error instanceof AxiosError &&
       (error.response?.data.message.includes(
-        API_MESSAGGES.unexistingUserEmail
+        API_MESSAGGES.unexistingUserEmail,
       ) ||
         error.response?.data.message.includes(
-          API_MESSAGGES.wrongUserCredentials
+          API_MESSAGGES.wrongUserCredentials,
         ))
     ) {
       alert(error.response?.data.message);
       console.log(error.response?.data.message);
-      console.log(error.message)
+      console.log(error.message);
       throw error;
     }
     alert("Error");
@@ -36,26 +40,30 @@ export const performUserLogin = async (
 };
 
 export const performUserRegister = async (
-  data: createNewUserRequestBody
+  data: createNewUserRequestBody,
 ): Promise<userLoginResponseObject> => {
   try {
-    const response = await axios.post(userUrlsMap.USER_CREATE_URL, {...data}, {headers: {'Content-Type': 'application/json'}});
-    const token = response.headers['authorization']
-    console.log('data?', response.data, token)
-    return {...response.data, token}
+    const response = await axios.post(
+      userUrlsMap.USER_CREATE_URL,
+      { ...data },
+      { headers: { "Content-Type": "application/json" } },
+    );
+    const token = response.headers["authorization"];
+    console.log("data?", response.data, token);
+    return { ...response.data, token };
   } catch (error) {
     if (
       error instanceof AxiosError &&
       (error.response?.data.message.includes(
-        API_MESSAGGES.missingUserCreateRequestParamsError
+        API_MESSAGGES.missingUserCreateRequestParamsError,
       ) ||
         error.response?.data.message.includes(
-          API_MESSAGGES.userEmailAlreadyExists
+          API_MESSAGGES.userEmailAlreadyExists,
         ))
     ) {
       alert(error.response?.data.message);
       console.log(error.response?.data.message);
-      console.log(error.message)
+      console.log(error.message);
       throw error;
     }
     alert("Error");
@@ -63,4 +71,3 @@ export const performUserRegister = async (
     throw error;
   }
 };
-

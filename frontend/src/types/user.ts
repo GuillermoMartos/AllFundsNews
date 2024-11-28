@@ -4,6 +4,6 @@ export interface userLoginResponseObject {
   id: string;
   archivedNewsIds: string[];
   deletedNewsIds: string[];
-  freshNews:externalAPINew[];
+  freshNews: externalAPINew[];
   token: string;
 }
