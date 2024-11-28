@@ -10,7 +10,6 @@
   --banner: rgba(61, 139, 167, 0.793);
 }
 
-
 body {
   background: var(--gradient);
 }

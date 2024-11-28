@@ -11,11 +11,14 @@ function LoginUserPage() {
   const [password, setPassword] = useState("");
   const [isFormDisabled, setIsFormDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { login } = useAuth();
 
   useEffect(() => {
-    setIsFormDisabled(userFormValidator.isEmailValid(email) && userFormValidator.isPasswordValid(password));
+    setIsFormDisabled(
+      userFormValidator.isEmailValid(email) &&
+        userFormValidator.isPasswordValid(password),
+    );
   }, [email, password]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +28,7 @@ function LoginUserPage() {
       const response = await performUserRegister({ email, password });
       console.log("Register successful:", response);
       login(response.token, response.id);
-      navigate("/userDashboard", {state: response.freshNews});
+      navigate("/userDashboard", { state: response.freshNews });
     } catch (error) {
       setIsLoading(false);
       console.error("Register failed:", error);
@@ -40,32 +43,29 @@ function LoginUserPage() {
 
         <form className={styles.form}>
           <div className={styles.inputs_group}>
-
-          <UserInputFormField
-            name="email"
-            id="email"
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            validator={userFormValidator.isEmailValid}
-            label="Ingrese su email"
-            errorMessage="Formato de email inválido."
-            >
-            </UserInputFormField>
+            <UserInputFormField
+              name="email"
+              id="email"
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              validator={userFormValidator.isEmailValid}
+              label="Ingrese su email"
+              errorMessage="Formato de email inválido."
+            ></UserInputFormField>
 
             <UserInputFormField
-            type="password"
-            name="password"
-            id="password"
-            placeholder="6 caracteres, alfanumérica"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            validator={userFormValidator.isPasswordValid}
-            label="Ingrese su contraseña"
-            errorMessage="Contraseña debe tener 6 caracteres y alfanumérica."
-            >
-            </UserInputFormField>
+              type="password"
+              name="password"
+              id="password"
+              placeholder="6 caracteres, alfanumérica"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              validator={userFormValidator.isPasswordValid}
+              label="Ingrese su contraseña"
+              errorMessage="Contraseña debe tener 6 caracteres y alfanumérica."
+            ></UserInputFormField>
           </div>
 
           <div className={styles.button}>
@@ -82,7 +82,10 @@ function LoginUserPage() {
           </div>
 
           <div className={styles.desc}>
-            Ya estás registrad@? <span className={styles.link} onClick={()=> navigate("/")}>INICIAR SESIÓN</span>
+            Ya estás registrad@?{" "}
+            <span className={styles.link} onClick={() => navigate("/")}>
+              INICIAR SESIÓN
+            </span>
           </div>
         </form>
         {isLoading ? <div className={styles.isLoading}>Cargando...</div> : null}

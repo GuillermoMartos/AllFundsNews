@@ -1,129 +1,129 @@
 .wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
 }
 
 .title {
-    font-family: "Baloo 2";
-    font-weight: 800;
-    font-size: 32px;
+  font-family: "Baloo 2";
+  font-weight: 800;
+  font-size: 32px;
 }
 
 .desc {
-    width: 331px;
-    color: #34343F;
-    text-align: center;
-    font-family: "Baloo 2";
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 2px;
+  width: 331px;
+  color: #34343f;
+  text-align: center;
+  font-family: "Baloo 2";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 2px;
 }
 
 .error_mesage {
-    font-family: "Baloo 2";
-    font-weight: bold;
-    font-size: 12px;
-    padding: 3px 0;
-    color: rgb(237, 58, 58);
+  font-family: "Baloo 2";
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 0;
+  color: rgb(237, 58, 58);
 }
 
 .form {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    padding: 2em;
-    border-radius: 14px;
-    align-items: center;
-    gap: 16px;
-    background: white;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  padding: 2em;
+  border-radius: 14px;
+  align-items: center;
+  gap: 16px;
+  background: white;
 }
 
 .inputs_group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px;
 }
 
 .inputs {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .inputs label {
-    color: #414141;
-    font-family: "Baloo 2";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 30.017px;
-    letter-spacing: 1px;
+  color: #414141;
+  font-family: "Baloo 2";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30.017px;
+  letter-spacing: 1px;
 }
 
 .inputs input {
-    width: 496px;
-    border-radius: 4px;
-    border: 0.5px solid var(--Color);
-    background: #FFF;
-    font-family: Roboto;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 30.017px;
-    letter-spacing: 1px;
-    padding: 8px 8px 8px 16px;
-    align-items: center;
+  width: 496px;
+  border-radius: 4px;
+  border: 0.5px solid var(--Color);
+  background: #fff;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 30.017px;
+  letter-spacing: 1px;
+  padding: 8px 8px 8px 16px;
+  align-items: center;
 }
 
 .button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
 }
 
 .btn_form {
-    display: flex;
-    width: 328px;
-    height: 56px;
-    padding: 16px 0px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 33px;
-    background: var(--Color);
-    border: none;
-    color: #FFF;
-    text-align: center;
-    font-family: "Baloo 2";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
-    margin: 24px;
-    letter-spacing: 3.455px;
+  display: flex;
+  width: 328px;
+  height: 56px;
+  padding: 16px 0px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 33px;
+  background: var(--Color);
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: "Baloo 2";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 24px;
+  letter-spacing: 3.455px;
 }
 
 .btn_form:disabled:hover {
-    background-color: red;
-    cursor: not-allowed;
+  background-color: red;
+  cursor: not-allowed;
 }
 
 .btn_form:hover {
-    background-color: #00b377;
-    transition: 0.8s;
-    cursor: pointer;
+  background-color: #00b377;
+  transition: 0.8s;
+  cursor: pointer;
 }
 
 .link:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .isLoading {
-    font-family: "Baloo 2";
-    color: rgb(2, 2, 229)
+  font-family: "Baloo 2";
+  color: rgb(2, 2, 229);
 }
