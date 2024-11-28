@@ -6,11 +6,11 @@
 
 :root {
   --Color: #302992;
-  --gradient: -webkit-linear-gradient(1deg, #519be0, #85c94d);
+  --gradient: -webkit-linear-gradient(1deg, #519be0, #7cb44d);
+  --banner: rgba(61, 139, 167, 0.793);
 }
 
 
 body {
-  display: flex;
-  background: var(--gradient)
+  background: var(--gradient);
 }

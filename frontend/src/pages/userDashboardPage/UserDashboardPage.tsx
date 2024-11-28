@@ -1,17 +1,16 @@
  
+import Header from "../../components/header.tsx";
 import styles from "../../css/UserDashboardPage.module.css";
-import btnStyles from "../../css/userForm.module.css";
-import{ useAuth } from "../../context/AuthContext";
+import moreStyles from "../../css/header.module.css";
 import { useArticles } from "../../hooks/useNotes";
 
 function UserDashboardPage() {
-const { logout } = useAuth();
 
-  const {  articles,
+  const {  
     loading,
     newArticlesLoading,
     fetchNewArticles,
-    archiveArticle,
+    archiveArticle, fixed
    } = useArticles();
 
   const handleClickArchive = (articleId:string) => {
@@ -25,44 +24,40 @@ const { logout } = useAuth();
   };
 
   return (
-    <div>
-      <div className={styles.dashboardHeader}>
-
+    <>
+    <Header></Header>
         {loading ? <div>Cargando...</div> : null}
-        <button
-          className={btnStyles.btn_form}
-          onClick={() => {
-            logout();
-          }}
-        >
-          Cerrar Sesión
-        </button>
-      </div>
-      <h1>AllFunds News</h1>
-      
-      <div className={styles.notesWrapper}>
-        <ul>
-          {articles && articles.map((article) => (
-            <li key={article.id}>
-              <h2>{article.title}</h2>
-              <p>{article.author}</p>
-              <p className={styles.contentCards}>{article.description}</p>
-              <img loading="lazy" src={article.image} alt={article.title.slice(0,15)}/>
+        
+      <div className={styles.articleWrapper}>
+   
+          {fixed && fixed.map((article) => (
+            <div className={styles.new_wrapper} id={article.id} key={article.id}>
+              <div className={styles.new_image_space}>
+              <img loading="lazy" className={styles.news_dashboard_img} src={article.image} alt={article.title.slice(0,15)}/>
+              </div>
+              <section className={styles.info_and_button_section}>
+
+              <section className={styles.news_info_section}>
+              <p className={styles.new_title}>{article.title}</p>
+              <p className={styles.new_author}>{article.author}</p>
+              <p className={styles.new_content}>{article.description}</p>
+              </section>
+
               <button
-                className={btnStyles.btn_form}
+                className={styles.btn_archivar}
                 onClick={() => {handleClickArchive(article.id)}}
-              >
-                Archivar noticia
+                >
+                Archivar
               </button>
-            </li>
+                </section>
+            
+            </div>
           ))}
 
-          <button onClick={()=>{handleClickFetchNews()}} disabled={newArticlesLoading}>
-        {newArticlesLoading ? "Cargando nuevas noticias..." : "Buscar más noticias!"}
-      </button>
-        </ul>
+  <button className={moreStyles.btn_banner} onClick={()=>{handleClickFetchNews()}} disabled={newArticlesLoading}>Buscar noticias!</button>
+{newArticlesLoading ? "Cargando nuevas noticias..." : "Buscar más noticias!"}
       </div>
-    </div>
+    </>
   );
 }
 

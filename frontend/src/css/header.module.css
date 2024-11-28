@@ -1,0 +1,28 @@
+.banner_wrapper {
+    width: 100vw;
+    background-color: var(--banner);
+    display: flex;
+    justify-content: space-between;
+}
+
+.banner_btn {
+    width: 228px;
+    height: 40px;
+    border-radius: 33px;
+    background: var(--Color);
+    border: none;
+    color: #FFF;
+    text-align: center;
+    font-family: "Baloo 2";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    margin: 24px;
+    letter-spacing: 3.455px;
+}
+
+.banner_btn:hover {
+    filter: brightness(1.2);
+    cursor: pointer;
+}
