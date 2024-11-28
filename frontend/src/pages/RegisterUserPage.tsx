@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import styles from "../../css/userForm.module.css";
-import { performUserRegister } from "../../api/userApi";
+import styles from "../css/userForm.module.css";
+import { performUserRegister } from "../api/userApi";
 import { useNavigate } from "react-router-dom";
-import UserInputFormField from "../../components/userInputsForm";
-import { userFormValidator } from "../../helpers/helpers";
-import { useAuth } from "../../context/AuthContext";
+import UserInputFormField from "../components/userInputsForm";
+import { userFormValidator } from "../helpers/helpers";
+import { useAuth } from "../context/AuthContext";
 
 function LoginUserPage() {
   const [email, setEmail] = useState("");

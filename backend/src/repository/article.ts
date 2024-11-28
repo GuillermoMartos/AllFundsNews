@@ -41,7 +41,7 @@ export async function saveNewArticleOrSetAsUserPrefered(
           content: normalizedArticle.content,
           description: normalizedArticle.description,
           date: new Date(normalizedArticle.date),
-          photo: normalizedArticle.photo,
+          image: normalizedArticle.image,
         },
       },
       {
