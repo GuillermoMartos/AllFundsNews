@@ -6,9 +6,15 @@ import cors from 'cors';
 
 const port = process.env.PORT || 3000;
 const app = express();
-//to do: configurate with frontend
-app.use(cors());
+//to do: configurate with frontend deployed
 app.use(express.json());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    exposedHeaders: ['Authorization'],
+  }),
+);
 app.use(router);
 
 async function run() {

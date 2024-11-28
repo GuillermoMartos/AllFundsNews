@@ -1,0 +1,2 @@
+export const LOCAL_STORAGE_USER_ID = "USER_ID";
+export const LOCAL_STORAGE_USER_TOKEN = "USER_TOKEN";
