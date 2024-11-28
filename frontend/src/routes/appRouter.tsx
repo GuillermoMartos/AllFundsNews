@@ -6,9 +6,10 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import LoginUserPage from "../pages/loginUserPage/LoginUserPage";
-import RegisterUserPage from "../pages/registerUserPage/RegisterUserPage";
-import UserDashboardPage from "../pages/userDashboardPage/UserDashboardPage";
+import LoginUserPage from "../pages/LoginUserPage";
+import RegisterUserPage from "../pages/RegisterUserPage";
+import UserDashboardPage from "../pages/UserDashboardPage";
+import ArchivedNewsPage from "../pages/ArhivedNewsPage";
 
 const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -23,6 +24,7 @@ const AppRouter: React.FC = () => {
         )}
         <Route path="/" element={<LoginUserPage />} />
         <Route path="/register" element={<RegisterUserPage />} />
+        <Route path="/my-archives" element={<ArchivedNewsPage />} />
       </Routes>
     </Router>
   );

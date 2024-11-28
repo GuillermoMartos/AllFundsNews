@@ -22,3 +22,13 @@ image: string
 language: string
 published: string
 }
+
+export interface internalAPINew {
+  date: Date;
+  title: string;
+  author: string;
+  content: string;
+  description: string;
+  id: string;
+  image: string;
+}

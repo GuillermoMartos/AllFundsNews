@@ -27,7 +27,7 @@ const articleSchema = new Schema({
     type: Date,
     required: true,
   },
-  photo: {
+  image: {
     type: String,
   },
   archiveDate: [

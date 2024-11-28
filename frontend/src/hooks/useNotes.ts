@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { archiveSelectedArticle, fetchFreshNews } from "../api/articleApi";
+import { archiveSelectedArticle, fetchFreshNews, deleteArchivedNewFromUser } from "../api/articleApi";
 import { externalAPINew } from "../types/article";
 import { useAuth } from "../context/AuthContext";
 import { LOCAL_STORAGE_USER_ID, LOCAL_STORAGE_USER_TOKEN } from "../constants/client";
@@ -46,12 +46,21 @@ export const useArticles = () => {
           document.getElementById(fetchedArticle.id)?.remove()
         }
       } catch (error) {
-        console.error("Error fetching new articles", error);
+        console.error("Error arhiving new, retry", error);
       }
   };
 
   const removeArticleFromArchive = async (articleId: string) => {
-    console.log(articleId)
+    try {
+      const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
+      const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
+      if (userId && token) {
+        await deleteArchivedNewFromUser(userId, token, articleId);
+        document.getElementById(articleId)?.remove()
+      }
+    } catch (error) {
+      console.error("Error deleting new, retry", error);
+    }
   };
 
 
