@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header.tsx";
 import NewCard from "../components/newCard.tsx";
 import styles from "../css/UserDashboardPage.module.css";
@@ -6,6 +7,7 @@ import { useArticles } from "../hooks/useNotes.ts";
 function UserDashboardPage() {
   const { articles, loading, newArticlesLoading, fetchNewArticles } =
     useArticles();
+  const navigate = useNavigate();
 
   const handleClickFetchNews = () => {
     fetchNewArticles();
@@ -13,7 +15,12 @@ function UserDashboardPage() {
 
   return (
     <>
-      <Header></Header>
+      <Header
+        buttonText="Mis archivos"
+        navigationFunctionHandler={() => {
+          navigate("/my-archives");
+        }}
+      ></Header>
       {loading ? <div>Cargando...</div> : null}
 
       <div className={styles.articleWrapper}>
