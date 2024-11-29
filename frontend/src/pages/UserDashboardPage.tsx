@@ -1,20 +1,35 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header.tsx";
 import NewCard from "../components/newCard.tsx";
 import styles from "../css/UserDashboardPage.module.css";
-import { useArticles } from "../hooks/useNotes.ts";
+import { useArticles } from "../hooks/useArticles.ts";
+import { useEffect } from "react";
 
 function UserDashboardPage() {
-  const { articles, loading, newArticlesLoading, fetchNewArticles } =
-    useArticles();
+  const { articles, newArticlesLoading, fetchNewArticles } = useArticles();
+  const navigate = useNavigate();
 
   const handleClickFetchNews = () => {
     fetchNewArticles();
   };
+  
+  useEffect(() => {
+    if(articles && articles.length===0){
+      const fetcher= async()=>{
+        await fetchNewArticles()
+      }
+      fetcher()
+    }
+  }, []);
 
   return (
     <>
-      <Header></Header>
-      {loading ? <div>Cargando...</div> : null}
+      <Header
+        buttonText="Mis archivos"
+        navigationFunctionHandler={() => {
+          navigate("/my-archives");
+        }}
+      ></Header>
 
       <div className={styles.articleWrapper}>
         {articles &&

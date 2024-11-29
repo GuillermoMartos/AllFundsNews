@@ -9,3 +9,7 @@ export interface UserInputFieldProps {
   validator: (value: string) => boolean;
   errorMessage: string;
 }
+export interface CustomizableNavigatorButtonProps {
+  navigationFunctionHandler: () => void;
+  buttonText: string;
+}

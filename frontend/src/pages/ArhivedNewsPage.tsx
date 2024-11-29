@@ -8,10 +8,12 @@ import {
   LOCAL_STORAGE_USER_TOKEN,
 } from "../constants/client.ts";
 import { fetchArchivedNews } from "../api/articleApi.ts";
+import { useNavigate } from "react-router-dom";
 
 function ArchivedNewsPage() {
   const [archivedNews, setArchivedNews] = useState<internalAPINew[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -33,11 +35,17 @@ function ArchivedNewsPage() {
 
   return (
     <>
-      <Header></Header>
+      <Header
+        buttonText="Volver a Noticias"
+        navigationFunctionHandler={() => {
+          navigate("/userDashboard");
+        }}
+      ></Header>
       {loading ? <div>Cargando...</div> : null}
 
       <div className={styles.articleWrapper}>
         {archivedNews &&
+          archivedNews.length > 0 &&
           archivedNews.map((article) => (
             <NewCard article={article} archivado={true}></NewCard>
           ))}
