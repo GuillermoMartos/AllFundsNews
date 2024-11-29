@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import style from "../css/header.module.css";
 import CustomizableNavigatorButton from "./navigatorButton";
@@ -9,12 +8,8 @@ function Header({
   buttonText,
 }: CustomizableNavigatorButtonProps) {
   const { logout } = useAuth();
-  const navigate = useNavigate();
   function handleLogoutClick() {
     logout();
-  }
-  function handleMyArchivesClick() {
-    navigate("/my-archives");
   }
 
   return (
@@ -26,14 +21,6 @@ function Header({
         }}
       >
         Cerrar sesión
-      </button>
-      <button
-        className={style.banner_btn}
-        onClick={() => {
-          handleMyArchivesClick();
-        }}
-      >
-        Mis archivos
       </button>
       <CustomizableNavigatorButton
         navigationFunctionHandler={navigationFunctionHandler}

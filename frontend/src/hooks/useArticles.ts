@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   archiveSelectedArticle,
   fetchFreshNews,
@@ -18,18 +18,21 @@ export const useArticles = () => {
   const [newArticlesLoading, setNewArticlesLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-
-  const { freshNews: initialNews } = location.state || [];
+  const initialNews: externalAPINew[] = location.state;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setArticles(initialNews);
-      setLoading(false);
+    if (!isAuthenticated) {
+      navigate("/");
     }
-  }, [initialNews, isAuthenticated]);
+    if (initialNews && initialNews.length > 0) {
+      setArticles(initialNews);
+    } 
+  }, [isAuthenticated]);
 
   const fetchNewArticles = async () => {
     setNewArticlesLoading(true);
+    setLoading(true);
     try {
       const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
       const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
@@ -41,6 +44,7 @@ export const useArticles = () => {
       console.error("Error fetching new articles", error);
     } finally {
       setNewArticlesLoading(false);
+      setLoading(false);
     }
   };
 

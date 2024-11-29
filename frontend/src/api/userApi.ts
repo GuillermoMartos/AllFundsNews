@@ -49,7 +49,6 @@ export const performUserRegister = async (
       { headers: { "Content-Type": "application/json" } },
     );
     const token = response.headers["authorization"];
-    console.log("data?", response.data, token);
     return { ...response.data, token };
   } catch (error) {
     if (

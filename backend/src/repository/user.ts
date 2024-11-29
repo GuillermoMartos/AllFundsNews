@@ -40,7 +40,12 @@ export const loginUserRepository = async (
     user.searchStrategy = pickNewStrategyAndReturnArray(user.searchStrategy);
     await user.save();
 
-    return user as UserData;
+    return {
+      id: user.id,
+      searchStrategy: user.searchStrategy,
+      archivedNewsIds: user.archivedNewsIds,
+      deletedNewsIds: user.deletedNewsIds,
+    } as UserData;
   } catch (error: any) {
     throw error;
   }

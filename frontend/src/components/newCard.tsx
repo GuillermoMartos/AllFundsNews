@@ -1,5 +1,5 @@
 import styles from "../css/UserDashboardPage.module.css";
-import { useArticles } from "../hooks/useNotes";
+import { useArticles } from "../hooks/useArticles";
 import { externalAPINew, internalAPINew } from "../types/article";
 
 type NewCardProps = {

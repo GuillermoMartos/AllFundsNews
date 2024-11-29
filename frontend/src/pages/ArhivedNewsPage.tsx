@@ -45,6 +45,7 @@ function ArchivedNewsPage() {
 
       <div className={styles.articleWrapper}>
         {archivedNews &&
+          archivedNews.length > 0 &&
           archivedNews.map((article) => (
             <NewCard article={article} archivado={true}></NewCard>
           ))}
