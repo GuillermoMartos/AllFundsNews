@@ -1,3 +1,4 @@
+import { addUserToCache } from '../helpers/cache';
 import { MESSAGGES } from '../helpers/constants';
 import { CustomError } from '../helpers/helpers';
 import {
@@ -81,7 +82,6 @@ export async function saveNewArticleOrSetAsUserPrefered(
         new: true,
       },
     );
-
     if (!userUpdated) {
       console.error(
         '[ERROR INESPERADO] En Usuario, al appendearle artículo guardado',
@@ -90,6 +90,12 @@ export async function saveNewArticleOrSetAsUserPrefered(
       );
       throw new CustomError(MESSAGGES.unexpectedError, 500);
     }
+    addUserToCache(userUpdated.id, {
+      id: userUpdated.id,
+      searchStrategy: userUpdated.searchStrategy,
+      archivedNewsIds: userUpdated.archivedNewsIds,
+      deletedNewsIds: userUpdated.deletedNewsIds,
+    } as UserData);
 
     return archivedNew;
   } catch (error) {
