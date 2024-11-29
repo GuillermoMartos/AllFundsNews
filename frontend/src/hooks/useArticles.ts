@@ -32,6 +32,7 @@ export const useArticles = () => {
 
   const fetchNewArticles = async () => {
     setNewArticlesLoading(true);
+    if(loading) return;
     setLoading(true);
     try {
       const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
