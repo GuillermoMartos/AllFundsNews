@@ -27,12 +27,12 @@ export const useArticles = () => {
     }
     if (initialNews && initialNews.length > 0) {
       setArticles(initialNews);
-    } 
+    }
   }, [isAuthenticated]);
 
   const fetchNewArticles = async () => {
     setNewArticlesLoading(true);
-    if(loading) return;
+    if (loading && articles && articles.length > 0) return;
     setLoading(true);
     try {
       const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);

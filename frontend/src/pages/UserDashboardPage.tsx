@@ -12,13 +12,13 @@ function UserDashboardPage() {
   const handleClickFetchNews = () => {
     fetchNewArticles();
   };
-  
+
   useEffect(() => {
-    if(articles && articles.length===0){
-      const fetcher= async()=>{
-        await fetchNewArticles()
-      }
-      fetcher()
+    if (articles && articles.length === 0) {
+      const fetcher = async () => {
+        await fetchNewArticles();
+      };
+      fetcher();
     }
   }, []);
 
