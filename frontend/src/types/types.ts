@@ -12,4 +12,5 @@ export interface UserInputFieldProps {
 export interface CustomizableNavigatorButtonProps {
   navigationFunctionHandler: () => void;
   buttonText: string;
+  logout?: ()=>void
 }

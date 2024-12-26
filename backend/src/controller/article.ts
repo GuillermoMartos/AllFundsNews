@@ -28,7 +28,6 @@ export const getUserArchivedNewsController = async (
   try {
     const { userId } = req.params;
     const userArchivedNews = await getUserArchivedNewsService(userId);
-
     return res.status(200).json(userArchivedNews);
   } catch (error) {
     next(error);

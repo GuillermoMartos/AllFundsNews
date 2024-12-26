@@ -88,6 +88,7 @@ export async function filterFiftyArticlesByUserPreferences(
   );
 
   if (inRangeNewsToFilter.length > 0) {
+    // to do: Set!
     const archivedMatches = user.archivedNewsIds.filter((id: string) =>
       inRangeNewsToFilter.includes(id),
     );

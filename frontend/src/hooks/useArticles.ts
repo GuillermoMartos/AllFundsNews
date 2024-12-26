@@ -25,20 +25,23 @@ export const useArticles = () => {
     if (!isAuthenticated) {
       navigate("/");
     }
-    if (initialNews && initialNews.length > 0) {
+    if(window.location.pathname === '/my-archives') return
+    else if (initialNews && initialNews.length > 0) {
       setArticles(initialNews);
+    }else{
+      fetchNewArticles()
     }
   }, [isAuthenticated]);
 
   const fetchNewArticles = async () => {
     setNewArticlesLoading(true);
-    if (loading && articles && articles.length > 0) return;
     setLoading(true);
     try {
       const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
       const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
       if (userId && token) {
         const freshNews = await fetchFreshNews(userId, token);
+        console.log('fresh bews')
         setArticles(freshNews);
       }
     } catch (error) {

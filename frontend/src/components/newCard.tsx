@@ -1,14 +1,14 @@
 import styles from "../css/UserDashboardPage.module.css";
-import { useArticles } from "../hooks/useArticles";
 import { externalAPINew, internalAPINew } from "../types/article";
 
 type NewCardProps = {
   article: externalAPINew | internalAPINew;
   archivado?: boolean;
+  archiveArticle: (data:externalAPINew)=>void;
+  removeArticleFromArchive: (id:string)=>void;
 };
 
-function NewCard({ article, archivado = false }: NewCardProps) {
-  const { archiveArticle, removeArticleFromArchive } = useArticles();
+function NewCard({ article, archivado = false, archiveArticle, removeArticleFromArchive }: NewCardProps) {
   const handleClickArchive = (
     articleFetched: externalAPINew | internalAPINew,
     archivado: boolean = false,

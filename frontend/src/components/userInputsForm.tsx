@@ -12,7 +12,7 @@ function UserInputFormField({
   validator,
   errorMessage,
 }: UserInputFieldProps) {
-  const isValid = validator ? validator(value) : true;
+  const isValid = validator(value);
 
   return (
     <div className={styles.inputs}>

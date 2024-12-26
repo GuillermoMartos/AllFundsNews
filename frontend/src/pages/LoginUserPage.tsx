@@ -48,7 +48,9 @@ function LoginUserPage() {
 
         <p className={styles.desc}>Inicie sesión</p>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={(e) => {
+                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+              }}>
           <div className={styles.inputs_group}>
             <UserInputFormField
               name="email"
@@ -76,14 +78,11 @@ function LoginUserPage() {
           </div>
 
           <div className={styles.button}>
-            <input
+            <button
               className={styles.btn_form}
               disabled={!isFormDisabled}
               value="INCIAR SESIÓN"
-              readOnly
-              onClick={(e) => {
-                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
-              }}
+              type='submit'
             />
           </div>
 

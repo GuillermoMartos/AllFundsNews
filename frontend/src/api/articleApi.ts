@@ -34,6 +34,7 @@ export const fetchArchivedNews = async (
     articleUrlsMap.ARTICLE_GET_ARCHIVED_URL(userId),
     token,
   );
+  console.log('arch, res', response)
   return response;
 };
 
