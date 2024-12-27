@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import styles from "../css/userForm.module.css";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { performUserLogin } from "../api/userApi";
 import { userFormValidator } from "../helpers/helpers";
 import UserInputFormField from "../components/userInputsForm";
 
-function LoginUserPage() {
+export default function LoginUserPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ function LoginUserPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/userDashboard");
+      navigate({ to: "/userDashboard" });
     }
     setIsFormDisabled(
       userFormValidator.isEmailValid(email) &&
@@ -32,9 +32,8 @@ function LoginUserPage() {
         email,
         password,
       });
-      console.log("Login successful:", response);
       login(response.token, response.id);
-      navigate("/userDashboard", { state: response.freshNews });
+      navigate({ to: "/userDashboard", params: response.freshNews });
     } catch (error) {
       setIsLoading(false);
       console.error("Login failed:", error);
@@ -48,9 +47,12 @@ function LoginUserPage() {
 
         <p className={styles.desc}>Inicie sesión</p>
 
-        <form className={styles.form} onSubmit={(e) => {
-                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
-              }}>
+        <form
+          className={styles.form}
+          onSubmit={(e) => {
+            handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+          }}
+        >
           <div className={styles.inputs_group}>
             <UserInputFormField
               name="email"
@@ -81,14 +83,18 @@ function LoginUserPage() {
             <button
               className={styles.btn_form}
               disabled={!isFormDisabled}
-              value="INCIAR SESIÓN"
-              type='submit'
-            />
+              type="submit"
+            >
+              INICIAR SESIÓN
+            </button>
           </div>
 
           <div className={styles.desc}>
             No estás registrad@?{" "}
-            <span className={styles.link} onClick={() => navigate("/register")}>
+            <span
+              className={styles.link}
+              onClick={() => navigate({ to: "/register" })}
+            >
               REGISTRO
             </span>
           </div>
@@ -98,5 +104,3 @@ function LoginUserPage() {
     </div>
   );
 }
-
-export default LoginUserPage;

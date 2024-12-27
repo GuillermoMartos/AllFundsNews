@@ -4,11 +4,16 @@ import { externalAPINew, internalAPINew } from "../types/article";
 type NewCardProps = {
   article: externalAPINew | internalAPINew;
   archivado?: boolean;
-  archiveArticle: (data:externalAPINew)=>void;
-  removeArticleFromArchive: (id:string)=>void;
+  archiveArticle: (data: externalAPINew) => void;
+  removeArticleFromArchive: (id: string) => void;
 };
 
-function NewCard({ article, archivado = false, archiveArticle, removeArticleFromArchive }: NewCardProps) {
+function NewCard({
+  article,
+  archivado = false,
+  archiveArticle,
+  removeArticleFromArchive,
+}: NewCardProps) {
   const handleClickArchive = (
     articleFetched: externalAPINew | internalAPINew,
     archivado: boolean = false,

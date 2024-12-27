@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import {
   archiveSelectedArticle,
   fetchFreshNews,
@@ -18,18 +18,18 @@ export const useArticles = () => {
   const [newArticlesLoading, setNewArticlesLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const initialNews: externalAPINew[] = location.state;
+  const initialNews: externalAPINew[] = location.state as externalAPINew[];
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/");
+      navigate({ to: "/" });
     }
-    if(window.location.pathname === '/my-archives') return
+    if (window.location.pathname === "/my-archives") return;
     else if (initialNews && initialNews.length > 0) {
       setArticles(initialNews);
-    }else{
-      fetchNewArticles()
+    } else {
+      fetchNewArticles();
     }
   }, [isAuthenticated]);
 
@@ -41,7 +41,7 @@ export const useArticles = () => {
       const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
       if (userId && token) {
         const freshNews = await fetchFreshNews(userId, token);
-        console.log('fresh bews')
+        console.log("fresh bews");
         setArticles(freshNews);
       }
     } catch (error) {

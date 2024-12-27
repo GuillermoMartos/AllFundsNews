@@ -36,11 +36,15 @@ export interface UserData {
   deletedNewsIds: string[];
   userRangeOfInterestDate?: RangesOfInterest;
   searchStrategy: string[];
-  email: string;
-  password: string;
+  email: String;
+  password: String;
 }
 
 export interface UpdatedOrDeletedIndicator {
   updated: boolean;
   deleted: boolean;
+}
+
+export interface CryptedData {
+  cryptedData: string;
 }

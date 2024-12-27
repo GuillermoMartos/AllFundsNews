@@ -1,7 +1,8 @@
 import { MESSAGGES } from '../helpers/constants';
 import {
   CustomError,
-  encrypt,
+  hashData,
+  saltHashData,
   fetchFiftyNewsByUserStrategy,
 } from '../helpers/helpers';
 import {
@@ -21,9 +22,9 @@ export const createNewUserService = async (
     if (!email || !password) {
       throw new CustomError(MESSAGGES.missingUserCreateRequestParamsError, 422);
     }
-    const cryptedMail = encrypt(email);
-    const cryptedPassword = encrypt(password);
-    const newUser = await createNewUserRepository(cryptedMail, cryptedPassword);
+    const cryptedMail = hashData(email);
+    const { cryptedData } = saltHashData(password);
+    const newUser = await createNewUserRepository(cryptedMail, cryptedData);
 
     /* aquí podríamos usar una API Gateway para usar nuestra ruta de usuario y la ruta de obtener noticias
     para el usuario. De momento, las mantengo en una sola llamada, aunque no sea lo óptimo en términos de
@@ -58,9 +59,7 @@ export const loginUserService = async (
     if (!email || !password) {
       throw new CustomError(MESSAGGES.missingUserCreateRequestParamsError, 422);
     }
-    const cryptedMail = encrypt(email);
-    const cryptedPassword = encrypt(password);
-    const user = await loginUserRepository(cryptedMail, cryptedPassword);
+    const user = await loginUserRepository(email, password);
 
     /* aquí podríamos usar una API Gateway para usar nuestra ruta de usuario y la ruta de obtener noticias
     para el usuario. De momento, las mantengo en una sola llamada, aunque no sea lo óptimo en términos de

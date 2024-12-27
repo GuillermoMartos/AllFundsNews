@@ -1,5 +1,10 @@
 import { MESSAGGES } from '../helpers/constants';
-import { CustomError, pickNewStrategyAndReturnArray } from '../helpers/helpers';
+import {
+  compareSaltedHashedData,
+  CustomError,
+  hashData,
+  pickNewStrategyAndReturnArray,
+} from '../helpers/helpers';
 import { UserData } from '../helpers/types';
 import { User } from '../models/user';
 
@@ -27,13 +32,15 @@ export const loginUserRepository = async (
   password: string,
 ): Promise<UserData> => {
   try {
+    const cryptedMail = hashData(email);
+    console.log(cryptedMail, 'este es el cryptedMail');
     const user = await User.findOne({
-      email,
+      email: cryptedMail,
     });
     if (!user) {
       throw new CustomError(MESSAGGES.unexistingUserEmail, 401);
     }
-    if (user?.password !== password) {
+    if (!compareSaltedHashedData(password, user.password)) {
       throw new CustomError(MESSAGGES.wrongUserCredentials, 401);
     }
 

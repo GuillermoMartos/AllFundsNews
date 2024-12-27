@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import styles from "../css/userForm.module.css";
 import { performUserRegister } from "../api/userApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import UserInputFormField from "../components/userInputsForm";
 import { userFormValidator } from "../helpers/helpers";
 import { useAuth } from "../context/AuthContext";
 
-function LoginUserPage() {
+export default function RegisterUserPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormDisabled, setIsFormDisabled] = useState(true);
@@ -28,7 +28,7 @@ function LoginUserPage() {
       const response = await performUserRegister({ email, password });
       console.log("Register successful:", response);
       login(response.token, response.id);
-      navigate("/userDashboard", { state: response.freshNews });
+      navigate({ to: "/userDashboard", params: response.freshNews });
     } catch (error) {
       setIsLoading(false);
       console.error("Register failed:", error);
@@ -83,7 +83,7 @@ function LoginUserPage() {
 
           <div className={styles.desc}>
             Ya estás registrad@?{" "}
-            <span className={styles.link} onClick={() => navigate("/")}>
+            <span className={styles.link} onClick={() => navigate({ to: "/" })}>
               INICIAR SESIÓN
             </span>
           </div>
@@ -93,5 +93,3 @@ function LoginUserPage() {
     </div>
   );
 }
-
-export default LoginUserPage;

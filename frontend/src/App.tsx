@@ -1,5 +1,5 @@
-import { AuthProvider } from "./context/AuthContext.tsx";
-import AppRouter from "./routes/appRouter.tsx";
+/* import { AuthProvider } from "./context/AuthContext.tsx";
+
 
 const App = () => (
   <AuthProvider>
@@ -8,3 +8,4 @@ const App = () => (
 );
 
 export default App;
+ */

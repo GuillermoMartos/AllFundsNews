@@ -1,5 +1,5 @@
-import { SHA3 } from 'crypto-js';
-import { APINew, ModelNew, RangesOfInterest } from './types';
+import { scryptSync, randomBytes, createHash, timingSafeEqual } from 'crypto';
+import { APINew, CryptedData, ModelNew, RangesOfInterest } from './types';
 import {
   API_NEWS_TOKEN,
   categoriesNews,
@@ -99,11 +99,26 @@ export const pickNewStrategyAndReturnArray = (
   return strategies;
 };
 
-export const encrypt = (data: any) => {
-  let crypted = SHA3(data, {
-    outputLength: 224,
-  }).toString();
-  return crypted;
+export const hashData = (data: any): string => {
+  return createHash('sha256').update(data).digest('hex');
+};
+
+export const saltHashData = (data: any): CryptedData => {
+  const personalUserSalt = randomBytes(16).toString('hex');
+  const hashedPassword = scryptSync(data, personalUserSalt, 64).toString('hex');
+  return {
+    cryptedData: `${personalUserSalt}:${hashedPassword}`,
+  };
+};
+
+export const compareSaltedHashedData = (
+  input: string,
+  hashedData: string,
+): boolean => {
+  const [salt, hashedPassword] = hashedData.split(':');
+  const bufferInput = scryptSync(input, salt, 64);
+  const bufferHashed = Buffer.from(hashedPassword, 'hex');
+  return timingSafeEqual(bufferHashed, bufferInput);
 };
 
 export function isDateBetweenRange(

@@ -1,31 +1,41 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import Header from "../components/header.tsx";
 import NewCard from "../components/newCard.tsx";
 import styles from "../css/UserDashboardPage.module.css";
 import { useArticles } from "../hooks/useArticles.ts";
 
-
-function UserDashboardPage() {
-  const { articles, newArticlesLoading, fetchNewArticles, removeArticleFromArchive, archiveArticle } = useArticles();
+export default function UserDashboardPage() {
+  const {
+    articles,
+    newArticlesLoading,
+    fetchNewArticles,
+    removeArticleFromArchive,
+    archiveArticle,
+  } = useArticles();
   const navigate = useNavigate();
 
   const handleClickFetchNews = () => {
     fetchNewArticles();
   };
 
-
   return (
     <>
       <Header
         buttonText="Mis archivos"
         navigationFunctionHandler={() => {
-          navigate("/my-archives");
+          navigate({ to: "/my-archives" });
         }}
       ></Header>
 
       <div className={styles.articleWrapper}>
         {articles &&
-          articles.map((article) => <NewCard article={article} removeArticleFromArchive={removeArticleFromArchive} archiveArticle={archiveArticle}></NewCard>)}
+          articles.map((article) => (
+            <NewCard
+              article={article}
+              removeArticleFromArchive={removeArticleFromArchive}
+              archiveArticle={archiveArticle}
+            ></NewCard>
+          ))}
 
         <button
           className={styles.btn_archivar}
@@ -41,5 +51,3 @@ function UserDashboardPage() {
     </>
   );
 }
-
-export default UserDashboardPage;
