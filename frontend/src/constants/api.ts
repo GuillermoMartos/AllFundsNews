@@ -3,7 +3,7 @@ import { externalAPINew } from "../types/article";
 const useDeployedServer = true;
 const BASE_API_URL = useDeployedServer
   ? "https://allfundsnewsprivate.onrender.com"
-  : "http://localhost:3000";
+  : "http://localhost:10000";
 const BASE_USER_API_URL = `${BASE_API_URL}/user`;
 const BASE_ARTICLE_API_URL = `${BASE_API_URL}/article`;
 
