@@ -6,11 +6,10 @@ import cors from 'cors';
 
 const port = process.env.PORT || 10000;
 const app = express();
-//to do: configurate with frontend deployed
 app.use(express.json());
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://all-funds-news.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     exposedHeaders: ['Authorization'],
   }),
