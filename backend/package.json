@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write . && eslint . --ext .js,.mjs,.ts --fix",
     "dev": "nodemon --exec ts-node src/index.ts",
-    "build": "cd backend && npm install && tsc",
+    "build": "npm install && echo 'npm install completed' && npm list && tsc",
     "start": "node dist/index.js"
   },
   "keywords": [
