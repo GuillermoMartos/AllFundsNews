@@ -4,7 +4,7 @@ import express from 'express';
 import router from './routes/index';
 import cors from 'cors';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 const app = express();
 //to do: configurate with frontend deployed
 app.use(express.json());
