@@ -1,9 +1,9 @@
 import { externalAPINew } from "../types/article";
 
-const useDeployedServer = true;
-const BASE_API_URL = useDeployedServer
-  ? "https://allfundsnewsprivate.onrender.com"
-  : "http://localhost:10000";
+const BASE_API_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:10000"
+    : "https://allfundsnewsprivate.onrender.com";
 const BASE_USER_API_URL = `${BASE_API_URL}/user`;
 const BASE_ARTICLE_API_URL = `${BASE_API_URL}/article`;
 

@@ -1,6 +1,6 @@
 # Readme basics
 
-run command npm i --save + npm run dev: for dev env use, please set useDeployedServer variable in src/constants/api.ts to _false_
+For dev env use: run command npm i --save + npm run dev
 
 # React + TypeScript + Vite
 
