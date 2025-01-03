@@ -5,24 +5,28 @@ import { useNavigate } from "@tanstack/react-router";
 import { performUserLogin } from "../api/userApi";
 import { userFormValidator } from "../helpers/helpers";
 import UserInputFormField from "../components/userInputsForm";
+import { externalAPINew } from "../types/article";
 
 export default function LoginUserPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [freshNews, setFreshNews] = useState<externalAPINew[]>([]);
   const [isFormDisabled, setIsFormDisabled] = useState(true);
   const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate({ to: "/userDashboard" });
+      navigate({ to: "/userDashboard", state(prev) {
+        return { ...prev, freshNews: freshNews };
+      }, });
     }
     setIsFormDisabled(
       userFormValidator.isEmailValid(email) &&
         userFormValidator.isPasswordValid(password),
     );
-  }, [email, password]);
+  }, [email, password, isAuthenticated]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +37,7 @@ export default function LoginUserPage() {
         password,
       });
       login(response.token, response.id);
-      navigate({ to: "/userDashboard", params: response.freshNews });
+      setFreshNews(response.freshNews);
     } catch (error) {
       setIsLoading(false);
       console.error("Login failed:", error);

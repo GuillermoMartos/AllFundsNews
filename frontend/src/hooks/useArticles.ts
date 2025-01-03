@@ -18,7 +18,7 @@ export const useArticles = () => {
   const [newArticlesLoading, setNewArticlesLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const initialNews: externalAPINew[] = location.state as externalAPINew[];
+  const initialNews: externalAPINew[] = (location.state as { freshNews: externalAPINew[] }).freshNews;
   const navigate = useNavigate();
 
   useEffect(() => {
