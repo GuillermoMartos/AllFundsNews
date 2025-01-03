@@ -69,9 +69,12 @@ export default function RegisterUserPage() {
           </div>
 
           <div className={styles.button}>
+            {isLoading ? (
+              <div className={styles.isLoading}>Cargando...</div>
+            ) : null}
             <input
               className={styles.btn_form}
-              disabled={!isFormDisabled}
+              disabled={!isFormDisabled || isLoading}
               type="submit"
               value="REGISTRO"
               readOnly
@@ -88,7 +91,6 @@ export default function RegisterUserPage() {
             </span>
           </div>
         </form>
-        {isLoading ? <div className={styles.isLoading}>Cargando...</div> : null}
       </section>
     </div>
   );

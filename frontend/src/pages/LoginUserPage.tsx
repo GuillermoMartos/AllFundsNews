@@ -85,7 +85,9 @@ export default function LoginUserPage() {
               errorMessage="Contraseña debe tener 6 caracteres y alfanumérica"
             ></UserInputFormField>
           </div>
-
+          {isLoading ? (
+            <div className={styles.isLoading}>Cargando...</div>
+          ) : null}
           <div className={styles.button}>
             <button
               className={styles.btn_form}
@@ -106,7 +108,6 @@ export default function LoginUserPage() {
             </span>
           </div>
         </form>
-        {isLoading ? <div className={styles.isLoading}>Cargando...</div> : null}
       </section>
     </div>
   );
