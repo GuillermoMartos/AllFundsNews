@@ -32,7 +32,8 @@ export const useArticles = () => {
     }
     if (window.location.pathname === "/my-archives") return;
     else if (initialNews && initialNews.length > 0) {
-      setArticles(initialNews);
+      setArticles(initialNews.slice(0, 20));
+      setInternalArticles(initialNews.slice(20));
     } else {
       fetchNewArticles();
     }
