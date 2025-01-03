@@ -37,16 +37,19 @@ export default function UserDashboardPage() {
             ></NewCard>
           ))}
 
-        <button
-          className={styles.btn_archivar}
-          onClick={() => {
-            handleClickFetchNews();
-          }}
-          disabled={newArticlesLoading}
-        >
-          Buscar noticias!
-        </button>
-        {newArticlesLoading ? "Cargando nuevas noticias..." : null}
+        {newArticlesLoading ? (
+          "Cargando nuevas noticias..."
+        ) : (
+          <button
+            className={styles.btn_archivar}
+            onClick={() => {
+              handleClickFetchNews();
+            }}
+            disabled={newArticlesLoading}
+          >
+            Buscar más noticias!
+          </button>
+        )}
       </div>
     </>
   );

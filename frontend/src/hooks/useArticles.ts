@@ -13,12 +13,17 @@ import {
 } from "../constants/client";
 
 export const useArticles = () => {
+  const [internalArticles, setInternalArticles] = useState<externalAPINew[]>(
+    [],
+  );
   const [articles, setArticles] = useState<externalAPINew[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [newArticlesLoading, setNewArticlesLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const initialNews: externalAPINew[] = (location.state as { freshNews: externalAPINew[] }).freshNews;
+  const initialNews: externalAPINew[] = (
+    location.state as { freshNews: externalAPINew[] }
+  ).freshNews;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,9 +45,14 @@ export const useArticles = () => {
       const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID);
       const token = localStorage.getItem(LOCAL_STORAGE_USER_TOKEN);
       if (userId && token) {
+        if (internalArticles.length > 0) {
+          setArticles((prev) => prev.concat(internalArticles.slice(0, 20)));
+          setInternalArticles(internalArticles.slice(20));
+          return;
+        }
         const freshNews = await fetchFreshNews(userId, token);
-        console.log("fresh bews");
-        setArticles(freshNews);
+        setArticles((prev) => prev.concat(freshNews.slice(0, 20)));
+        setInternalArticles(freshNews.slice(20));
       }
     } catch (error) {
       console.error("Error fetching new articles", error);

@@ -18,9 +18,12 @@ export default function LoginUserPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate({ to: "/userDashboard", state(prev) {
-        return { ...prev, freshNews: freshNews };
-      }, });
+      navigate({
+        to: "/userDashboard",
+        state(prev) {
+          return { ...prev, freshNews: freshNews };
+        },
+      });
     }
     setIsFormDisabled(
       userFormValidator.isEmailValid(email) &&
