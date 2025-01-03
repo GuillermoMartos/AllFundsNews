@@ -33,7 +33,6 @@ export const loginUserRepository = async (
 ): Promise<UserData> => {
   try {
     const cryptedMail = hashData(email);
-    console.log(cryptedMail, 'este es el cryptedMail');
     const user = await User.findOne({
       email: cryptedMail,
     });

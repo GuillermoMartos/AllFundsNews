@@ -86,7 +86,7 @@ export default function LoginUserPage() {
           <div className={styles.button}>
             <button
               className={styles.btn_form}
-              disabled={!isFormDisabled}
+              disabled={!isFormDisabled || isLoading}
               type="submit"
             >
               INICIAR SESIÓN
